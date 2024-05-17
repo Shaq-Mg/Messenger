@@ -14,6 +14,7 @@
 		46D9AF6F2BF7E77F00866C38 /* MessengerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D9AF6E2BF7E77F00866C38 /* MessengerTests.swift */; };
 		46D9AF792BF7E77F00866C38 /* MessengerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D9AF782BF7E77F00866C38 /* MessengerUITests.swift */; };
 		46D9AF7B2BF7E77F00866C38 /* MessengerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D9AF7A2BF7E77F00866C38 /* MessengerUITestsLaunchTests.swift */; };
+		46EA83F62BF7E82F00BB2C1F /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EA83F52BF7E82F00BB2C1F /* ChatUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		46D9AF742BF7E77F00866C38 /* MessengerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessengerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		46D9AF782BF7E77F00866C38 /* MessengerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerUITests.swift; sourceTree = "<group>"; };
 		46D9AF7A2BF7E77F00866C38 /* MessengerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		46EA83F52BF7E82F00BB2C1F /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,6 +76,11 @@
 		46D9AF512BF7E77F00866C38 = {
 			isa = PBXGroup;
 			children = (
+				46D9AF872BF7E7A500866C38 /* App */,
+				46D9AF8B2BF7E7C700866C38 /* Component */,
+				46D9AF8A2BF7E7C000866C38 /* Model */,
+				46D9AF892BF7E7B700866C38 /* ViewModel */,
+				46D9AF882BF7E7B000866C38 /* Views */,
 				46D9AF5C2BF7E77F00866C38 /* Messenger */,
 				46D9AF6D2BF7E77F00866C38 /* MessengerTests */,
 				46D9AF772BF7E77F00866C38 /* MessengerUITests */,
@@ -94,8 +101,6 @@
 		46D9AF5C2BF7E77F00866C38 /* Messenger */ = {
 			isa = PBXGroup;
 			children = (
-				46D9AF5D2BF7E77F00866C38 /* MessengerApp.swift */,
-				46D9AF5F2BF7E77F00866C38 /* ContentView.swift */,
 				46D9AF612BF7E77F00866C38 /* Assets.xcassets */,
 				46D9AF632BF7E77F00866C38 /* Preview Content */,
 			);
@@ -125,6 +130,44 @@
 				46D9AF7A2BF7E77F00866C38 /* MessengerUITestsLaunchTests.swift */,
 			);
 			path = MessengerUITests;
+			sourceTree = "<group>";
+		};
+		46D9AF872BF7E7A500866C38 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				46D9AF5D2BF7E77F00866C38 /* MessengerApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		46D9AF882BF7E7B000866C38 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				46D9AF5F2BF7E77F00866C38 /* ContentView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		46D9AF892BF7E7B700866C38 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		46D9AF8A2BF7E7C000866C38 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				46EA83F52BF7E82F00BB2C1F /* ChatUser.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		46D9AF8B2BF7E7C700866C38 /* Component */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Component;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +300,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46EA83F62BF7E82F00BB2C1F /* ChatUser.swift in Sources */,
 				46D9AF602BF7E77F00866C38 /* ContentView.swift in Sources */,
 				46D9AF5E2BF7E77F00866C38 /* MessengerApp.swift in Sources */,
 			);
