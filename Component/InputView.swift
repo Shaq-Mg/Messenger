@@ -22,13 +22,14 @@ struct InputView: View {
             VStack {
                 if isSecureField {
                     TextField(placeholder, text: $text)
-                        .frame(maxWidth: .infinity)
-                        .textFieldStyle(.roundedBorder)
-                        .padding()
+                       
                 } else {
                     SecureField(placeholder, text: $text)
                 }
             }
+            .frame(maxWidth: .infinity)
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .textFieldStyle(.roundedBorder)
         }
     }
 }
