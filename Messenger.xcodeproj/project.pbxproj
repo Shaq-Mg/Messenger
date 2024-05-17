@@ -10,7 +10,6 @@
 		460FE6942BF7F98E007D8E77 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460FE6932BF7F98E007D8E77 /* Message.swift */; };
 		460FE6992BF7FA5E007D8E77 /* MessagesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460FE6982BF7FA5E007D8E77 /* MessagesManager.swift */; };
 		46D9AF5E2BF7E77F00866C38 /* MessengerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D9AF5D2BF7E77F00866C38 /* MessengerApp.swift */; };
-		46D9AF602BF7E77F00866C38 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D9AF5F2BF7E77F00866C38 /* ContentView.swift */; };
 		46D9AF622BF7E77F00866C38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46D9AF612BF7E77F00866C38 /* Assets.xcassets */; };
 		46D9AF652BF7E77F00866C38 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46D9AF642BF7E77F00866C38 /* Preview Assets.xcassets */; };
 		46D9AF6F2BF7E77F00866C38 /* MessengerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46D9AF6E2BF7E77F00866C38 /* MessengerTests.swift */; };
@@ -26,6 +25,7 @@
 		46EA84092BF7ECA600BB2C1F /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EA84082BF7ECA600BB2C1F /* InputView.swift */; };
 		46EA840C2BF7F04000BB2C1F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EA840B2BF7F04000BB2C1F /* LoginView.swift */; };
 		46EA840E2BF7F05500BB2C1F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EA840D2BF7F05500BB2C1F /* SignUpView.swift */; };
+		46FB930D2BF8085A001643E5 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB930C2BF8085A001643E5 /* FirebaseAuthManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,6 @@
 		460FE6982BF7FA5E007D8E77 /* MessagesManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagesManager.swift; sourceTree = "<group>"; };
 		46D9AF5A2BF7E77F00866C38 /* Messenger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Messenger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46D9AF5D2BF7E77F00866C38 /* MessengerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerApp.swift; sourceTree = "<group>"; };
-		46D9AF5F2BF7E77F00866C38 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		46D9AF612BF7E77F00866C38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		46D9AF642BF7E77F00866C38 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		46D9AF6A2BF7E77F00866C38 /* MessengerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MessengerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +63,7 @@
 		46EA84082BF7ECA600BB2C1F /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		46EA840B2BF7F04000BB2C1F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		46EA840D2BF7F05500BB2C1F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		46FB930C2BF8085A001643E5 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +98,7 @@
 		460FE6952BF7FA1E007D8E77 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				46FB930C2BF8085A001643E5 /* FirebaseAuthManager.swift */,
 				460FE6982BF7FA5E007D8E77 /* MessagesManager.swift */,
 			);
 			path = Manager;
@@ -177,7 +178,6 @@
 			isa = PBXGroup;
 			children = (
 				46EA840A2BF7F02800BB2C1F /* Login */,
-				46D9AF5F2BF7E77F00866C38 /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -374,11 +374,11 @@
 				46EA840C2BF7F04000BB2C1F /* LoginView.swift in Sources */,
 				46EA83F92BF7E89900BB2C1F /* LoginViewModel.swift in Sources */,
 				46EA83F62BF7E82F00BB2C1F /* ChatUser.swift in Sources */,
+				46FB930D2BF8085A001643E5 /* FirebaseAuthManager.swift in Sources */,
 				46EA840E2BF7F05500BB2C1F /* SignUpView.swift in Sources */,
 				46EA84092BF7ECA600BB2C1F /* InputView.swift in Sources */,
 				460FE6992BF7FA5E007D8E77 /* MessagesManager.swift in Sources */,
 				460FE6942BF7F98E007D8E77 /* Message.swift in Sources */,
-				46D9AF602BF7E77F00866C38 /* ContentView.swift in Sources */,
 				46D9AF5E2BF7E77F00866C38 /* MessengerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

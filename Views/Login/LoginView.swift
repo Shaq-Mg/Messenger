@@ -12,6 +12,7 @@ struct LoginView: View {
     var body: some View {
         NavigationStack {
             ZStack {
+                Color.mint.ignoresSafeArea()
                 VStack(spacing: 20) {
                     VStack(spacing: 8) {
                         
@@ -20,7 +21,7 @@ struct LoginView: View {
                         InputView(text: $viewModel.password, title: "Password", placeholder: "password", isSecureField: true)
                     }
                     Button {
-                        
+                        viewModel.signIn(email: viewModel.email, password: viewModel.password)
                     } label: {
                         Text("Sign In")
                             .font(.headline)
@@ -36,6 +37,7 @@ struct LoginView: View {
             }
         }
         .navigationTitle("Sign In")
+        .navigationBarBackButtonHidden(true)
     }
 }
 

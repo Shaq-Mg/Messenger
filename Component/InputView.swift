@@ -27,8 +27,10 @@ struct InputView: View {
                     SecureField(placeholder, text: $text)
                 }
             }
+            .font(.system(size: 20))
             .frame(maxWidth: .infinity)
             .clipShape(RoundedRectangle(cornerRadius: 20))
+            .shadow(radius: 2)
             .textFieldStyle(.roundedBorder)
         }
     }
