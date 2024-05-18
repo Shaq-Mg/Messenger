@@ -21,17 +21,20 @@ struct InputView: View {
             
             VStack {
                 if isSecureField {
-                    TextField(placeholder, text: $text)
-                       
-                } else {
                     SecureField(placeholder, text: $text)
+                        .font(.system(size: 16))
+                    
+                } else {
+                    TextField(placeholder, text: $text)
+                        .font(.system(size: 16))
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.none)
                 }
             }
-            .font(.system(size: 20))
+            .padding()
             .frame(maxWidth: .infinity)
-            .clipShape(RoundedRectangle(cornerRadius: 20))
-            .shadow(radius: 2)
-            .textFieldStyle(.roundedBorder)
+            .background(.white)
+            .overlay(RoundedRectangle(cornerRadius: 20).stroke(lineWidth: 1).foregroundStyle(.secondary))
         }
     }
 }
