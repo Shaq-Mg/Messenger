@@ -38,6 +38,7 @@ final class LoginService: ObservableObject {
                 self.errorMessage = error.localizedDescription
             } else {
                 self.errorMessage = "Successfully signed up user"
+                self.isUserLoggedIn = true
                 // Navigate to another view or show success message
             }
         }
@@ -46,10 +47,19 @@ final class LoginService: ObservableObject {
     func signIn(email: String, password: String) {
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
             if let error = error {
-                self?.errorMessage = error.localizedDescription
+                self?.errorMessage = "Error: unable to sign in user \(error.localizedDescription)"
             } else {
                 self?.user = authResult?.user
+                self?.isUserLoggedIn = true
             }
+        }
+    }
+    
+    func fetchCurrentUser() {
+        if let currentUser = Auth.auth().currentUser {
+            self.user = currentUser
+        } else {
+            self.errorMessage = "Error: unable to fetch current user."
         }
     }
     
@@ -58,7 +68,7 @@ final class LoginService: ObservableObject {
             try Auth.auth().signOut()
             self.user = nil
         } catch let signOutError as NSError {
-            self.errorMessage = signOutError.localizedDescription
+            self.errorMessage = "Error: failed to sign out user"
         }
     }
 }

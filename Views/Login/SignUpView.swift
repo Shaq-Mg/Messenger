@@ -26,7 +26,7 @@ struct SignUpView: View {
                         InputView(text: $viewModel.confirmPassword, title: "Confirm Passowrd", placeholder: "Confirm password", isSecureField: true)
                     }
                     Button {
-
+                        viewModel.signUp()
                     } label: {
                         Text("Sign Up")
                             .font(.headline)
