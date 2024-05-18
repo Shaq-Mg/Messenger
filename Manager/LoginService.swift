@@ -38,7 +38,9 @@ final class LoginService: ObservableObject {
                 self.errorMessage = error.localizedDescription
             } else {
                 self.errorMessage = "Successfully signed up user"
-                self.isUserLoggedIn = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    self.isUserLoggedIn = true
+                }
                 // Navigate to another view or show success message
             }
         }
@@ -50,7 +52,9 @@ final class LoginService: ObservableObject {
                 self?.errorMessage = "Error: unable to sign in user \(error.localizedDescription)"
             } else {
                 self?.user = authResult?.user
-                self?.isUserLoggedIn = true
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                    self?.isUserLoggedIn = true
+                }
             }
         }
     }

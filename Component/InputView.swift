@@ -34,7 +34,9 @@ struct InputView: View {
             .padding()
             .frame(maxWidth: .infinity)
             .background(.white)
+            .cornerRadius(20)
             .overlay(RoundedRectangle(cornerRadius: 20).stroke(lineWidth: 1).foregroundStyle(.secondary))
+            .shadow(radius: 5)
         }
     }
 }
