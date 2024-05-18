@@ -19,7 +19,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 @main
 struct MessengerApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    @StateObject private var vm = LoginViewModel()
+    @StateObject private var vm = LoginService()
     var body: some Scene {
         WindowGroup {
             LoginView()

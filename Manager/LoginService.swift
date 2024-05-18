@@ -9,9 +9,11 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
 
-final class LoginViewModel: ObservableObject {
+final class LoginService: ObservableObject {
     @Published var user: User?
     @Published var errorMessage = ""
+    @Published var isUserLoggedIn = false
+    @Published var isLoading = false
     
     @Published var email = ""
     @Published var username = ""
@@ -21,6 +23,24 @@ final class LoginViewModel: ObservableObject {
     
     init() {
         self.user = Auth.auth().currentUser
+    }
+    
+    func signUp() {
+        guard !email.isEmpty, !password.isEmpty else {
+            errorMessage = "Email and password cannot be empty."
+            return
+        }
+        
+        isLoading = true
+        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            self.isLoading = false
+            if let error = error {
+                self.errorMessage = error.localizedDescription
+            } else {
+                self.errorMessage = "Successfully signed up user"
+                // Navigate to another view or show success message
+            }
+        }
     }
     
     func signIn(email: String, password: String) {
