@@ -8,9 +8,6 @@
 import Foundation
 
 struct ChatUser: Identifiable {
-    var id = UUID()
-    let photoURL: String
-    let username: String
-    let email: String
-    let password: String
+    var id: String { uid }
+    let uid, photoImageUrl, username, email, password: String
 }
