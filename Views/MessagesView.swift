@@ -12,7 +12,8 @@ struct MessagesView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                MessagesDisplayBar()
+                Text("Current user id: \(vm.errorMessage)")
+                MessagesDisplayBar(vm: vm)
                 ScrollView {
                     ForEach(0..<8) { item in
                         HStack {
@@ -67,11 +68,12 @@ struct MessagesView_Previews: PreviewProvider {
 }
 
 struct MessagesDisplayBar: View {
+    @ObservedObject var vm: MessagesViewModel
     var body: some View {
         HStack {
             Circle()
                 .frame(width: 50, height: 50)
-            Text("USER")
+            Text(vm.chatUser?.username ?? "user")
                 .font(.system(size: 24, weight: .bold))
             Spacer()
             NavigationLink {
