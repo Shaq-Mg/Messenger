@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MessagesView: View {
+    @ObservedObject var vm = MessagesViewModel()
     var body: some View {
         NavigationStack {
             VStack {
@@ -34,6 +35,10 @@ struct MessagesView: View {
                             .padding(.vertical, 6)
                     }
                 }
+            }
+            .fullScreenCover(isPresented: $vm.isLoggedOut) {
+                LoginView()
+                    .environmentObject(LoginService())
             }
 //            .overlay(
 //                Button(action: {

@@ -22,7 +22,7 @@ struct MessengerApp: App {
     @StateObject private var vm = LoginService()
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            MessagesView()
                 .environmentObject(vm)
         }
     }

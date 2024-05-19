@@ -12,7 +12,7 @@ import FirebaseAuth
 final class LoginService: ObservableObject {
     @Published var user: User?
     @Published var errorMessage = ""
-    @Published var isUserLoggedIn = false
+    @Published var isLoggedOut = true
     @Published var isLoading = false
     
     @Published var email = ""
@@ -39,7 +39,7 @@ final class LoginService: ObservableObject {
             } else {
                 self.errorMessage = "Successfully signed up user"
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self.isUserLoggedIn = true
+                    self.isLoggedOut = true
                 }
                 // Navigate to another view or show success message
             }
@@ -53,17 +53,9 @@ final class LoginService: ObservableObject {
             } else {
                 self?.user = authResult?.user
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self?.isUserLoggedIn = true
+                    self?.isLoggedOut = true
                 }
             }
-        }
-    }
-    
-    func fetchCurrentUser() {
-        if let currentUser = Auth.auth().currentUser {
-            self.user = currentUser
-        } else {
-            self.errorMessage = "Error: unable to fetch current user."
         }
     }
     
