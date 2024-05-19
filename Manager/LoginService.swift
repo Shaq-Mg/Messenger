@@ -11,7 +11,7 @@ import FirebaseAuth
 
 final class LoginService: ObservableObject {
     @Published var user: User?
-    @Published var errorMessage = ""
+    @Published var loginStatusMessage = ""
     @Published var isLoggedOut = true
     @Published var isLoading = false
     
@@ -27,44 +27,39 @@ final class LoginService: ObservableObject {
     
     func signUp() {
         guard !email.isEmpty, !password.isEmpty else {
-            errorMessage = "Email and password cannot be empty."
+            loginStatusMessage = "Email and password cannot be empty."
             return
         }
-        
-        isLoading = true
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            self.isLoading = false
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
             if let error = error {
-                self.errorMessage = error.localizedDescription
-            } else {
-                self.errorMessage = "Successfully signed up user"
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self.isLoggedOut = true
-                }
-                // Navigate to another view or show success message
+                print("Failed to create user:", error)
+                self.loginStatusMessage = "Failed to create user: \(error)"
+                return
             }
+            print("Successfully created user: \(result?.user.uid ?? "")")
+            self.loginStatusMessage = "Successfully created user: \(result?.user.uid ?? "")"
+            return
         }
     }
     
     func signIn(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { [weak self] authResult, error in
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
             if let error = error {
-                self?.errorMessage = "Error: unable to sign in user \(error.localizedDescription)"
-            } else {
-                self?.user = authResult?.user
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                    self?.isLoggedOut = true
-                }
+                print("Failed to sign in user:", error)
+                self.loginStatusMessage = "Failed to sign in user: \(error)"
+                return
             }
+            print("Successfully signed in as user: \(result?.user.uid ?? "")")
+            self.loginStatusMessage = "Successfully signed in as user: \(result?.user.uid ?? "")"
+            return
         }
     }
     
     func signOut() {
         do {
             try Auth.auth().signOut()
-            self.user = nil
-        } catch let signOutError as NSError {
-            self.errorMessage = "Error: failed to sign out user"
+        } catch {
+            self.loginStatusMessage = "Error: failed to sign out user"
         }
     }
 }

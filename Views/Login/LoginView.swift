@@ -32,6 +32,8 @@ struct LoginView: View {
                         SignUpView()
                     }
                     .font(.callout)
+                    
+                    Text(viewModel.loginStatusMessage)
                 }
                 .padding(.horizontal)
             }
