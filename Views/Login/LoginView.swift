@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
+    let didCompleteLoginProcess: () -> ()
     @EnvironmentObject var viewModel: LoginService
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
             ZStack {
@@ -22,6 +24,10 @@ struct LoginView: View {
                     }
                     Button {
                         viewModel.signIn(email: viewModel.email, password: viewModel.password)
+                        didCompleteLoginProcess()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            dismiss()
+                        }
                     } label: {
                         Text("Sign In")
                             .font(.headline)
@@ -34,6 +40,7 @@ struct LoginView: View {
                     .font(.callout)
                     
                     Text(viewModel.loginStatusMessage)
+                        .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal)
             }
@@ -46,7 +53,7 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            LoginView()
+            LoginView(didCompleteLoginProcess: { })
                 .environmentObject(LoginService())
         }
     }

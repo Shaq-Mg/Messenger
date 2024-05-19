@@ -28,7 +28,6 @@
 		46EA84092BF7ECA600BB2C1F /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EA84082BF7ECA600BB2C1F /* InputView.swift */; };
 		46EA840C2BF7F04000BB2C1F /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EA840B2BF7F04000BB2C1F /* LoginView.swift */; };
 		46EA840E2BF7F05500BB2C1F /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EA840D2BF7F05500BB2C1F /* SignUpView.swift */; };
-		46FB930D2BF8085A001643E5 /* FirebaseAuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FB930C2BF8085A001643E5 /* FirebaseAuthManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,7 +68,6 @@
 		46EA84082BF7ECA600BB2C1F /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		46EA840B2BF7F04000BB2C1F /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		46EA840D2BF7F05500BB2C1F /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		46FB930C2BF8085A001643E5 /* FirebaseAuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAuthManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +102,6 @@
 		460FE6952BF7FA1E007D8E77 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				46FB930C2BF8085A001643E5 /* FirebaseAuthManager.swift */,
 				46EA83F82BF7E89900BB2C1F /* LoginService.swift */,
 				460FE6982BF7FA5E007D8E77 /* MessagesManager.swift */,
 			);
@@ -386,7 +383,6 @@
 				46EA83F92BF7E89900BB2C1F /* LoginService.swift in Sources */,
 				4685F67E2BFA6D91000554D8 /* ProfileView.swift in Sources */,
 				46EA83F62BF7E82F00BB2C1F /* ChatUser.swift in Sources */,
-				46FB930D2BF8085A001643E5 /* FirebaseAuthManager.swift in Sources */,
 				46EA840E2BF7F05500BB2C1F /* SignUpView.swift in Sources */,
 				46EA84092BF7ECA600BB2C1F /* InputView.swift in Sources */,
 				460FE6992BF7FA5E007D8E77 /* MessagesManager.swift in Sources */,

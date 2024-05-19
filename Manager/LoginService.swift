@@ -22,7 +22,7 @@ final class LoginService: ObservableObject {
     @Published var confirmPassword = ""
     
     init() {
-        self.user = Auth.auth().currentUser
+        
     }
     
     func signUp() {
@@ -36,7 +36,6 @@ final class LoginService: ObservableObject {
                 self.loginStatusMessage = "Failed to create user: \(error)"
                 return
             }
-            self.isLoggedOut.toggle()
             print("Successfully created user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully created user: \(result?.user.uid ?? "")"
             return
@@ -50,7 +49,6 @@ final class LoginService: ObservableObject {
                 self.loginStatusMessage = "Failed to sign in user: \(error)"
                 return
             }
-            self.isLoggedOut.toggle()
             print("Successfully signed in as user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully signed in as user: \(result?.user.uid ?? "")"
             return
@@ -59,10 +57,9 @@ final class LoginService: ObservableObject {
     
     func signOut() {
         do {
-            isLoggedOut.toggle()
             try Auth.auth().signOut()
         } catch {
-            self.loginStatusMessage = "Error: failed to sign out user"
+            self.loginStatusMessage = "Error: failed to sign out user\(Auth.auth().currentUser?.uid ?? "")"
         }
     }
 }

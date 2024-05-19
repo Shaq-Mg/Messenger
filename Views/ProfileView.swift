@@ -45,11 +45,6 @@ struct ProfileView: View {
             }
         }
         .navigationTitle("My Account")
-        .navigationBarItems(trailing: Button(action: {
-            vm.isLoggedOut.toggle()
-        }, label: {
-            Text("Sign out").bold()
-        }))
         .actionSheet(isPresented: $vm.showSignOutAlert, content: {
             .init(title: Text("Sign Out").bold(), message: Text("Are you sure that you want to sign out your account?"), buttons: [
                 .destructive(Text("Yes").bold(), action: {

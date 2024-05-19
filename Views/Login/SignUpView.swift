@@ -27,6 +27,9 @@ struct SignUpView: View {
                     }
                     Button {
                         viewModel.signUp()
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                           dismiss()
+                        }
                     } label: {
                         Text("Sign Up")
                             .font(.headline)
@@ -39,6 +42,7 @@ struct SignUpView: View {
                     .font(.callout)
                     
                     Text(viewModel.loginStatusMessage)
+                        .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal)
             }
