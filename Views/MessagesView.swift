@@ -72,7 +72,7 @@ struct MessagesDisplayBar: View {
                 .font(.system(size: 24, weight: .bold))
             Spacer()
             NavigationLink {
-                
+                ProfileView()
             } label: {
                 Image(systemName: "gear")
                     .font(.system(size: 24, weight: .bold))

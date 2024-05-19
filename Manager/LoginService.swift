@@ -13,7 +13,7 @@ final class LoginService: ObservableObject {
     @Published var user: User?
     @Published var loginStatusMessage = ""
     @Published var isLoggedOut = true
-    @Published var isLoading = false
+    @Published var showSignOutAlert = false
     
     @Published var email = ""
     @Published var username = ""
