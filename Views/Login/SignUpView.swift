@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SignUpView: View {
-    @EnvironmentObject var viewModel: LoginService
+    @EnvironmentObject var viewModel: AuthenticationViewModel
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
@@ -56,7 +56,7 @@ struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             SignUpView()
-                .environmentObject(LoginService())
+                .environmentObject(AuthenticationViewModel())
         }
     }
 }

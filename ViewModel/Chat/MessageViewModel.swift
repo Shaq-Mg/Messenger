@@ -15,19 +15,21 @@ class MessagesViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var isLoggedOut = true
     
+    let manager = FirebaseManger.shared
+    
     init() {
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-//            self.isLoggedOut = Auth.auth().currentUser?.uid == nil
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.isLoggedOut = Auth.auth().currentUser?.uid == nil
+        }
         fetchCurrentUser()
     }
     
     func fetchCurrentUser() {
-        guard let uid = Auth.auth().currentUser?.uid else {
+        guard let uid = manager.auth.currentUser?.uid else {
             self.errorMessage = "Could not find firebase uid"
             return
         }
-        Firestore.firestore().collection("users")
+        manager.firebase.collection("users")
             .document(uid).getDocument { documentSnapshot, error in
                 if let error = error {
                     self.errorMessage = "Failed to fetch current user: \(error)"

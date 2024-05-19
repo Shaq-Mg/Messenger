@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LoginView: View {
     let didCompleteLoginProcess: () -> ()
-    @EnvironmentObject var viewModel: LoginService
+    @EnvironmentObject var viewModel: AuthenticationViewModel
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
@@ -38,9 +38,8 @@ struct LoginView: View {
                         SignUpView()
                     }
                     .font(.callout)
-                    
                     Text(viewModel.loginStatusMessage)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(.white)
                 }
                 .padding(.horizontal)
             }
@@ -54,7 +53,7 @@ struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
             LoginView(didCompleteLoginProcess: { })
-                .environmentObject(LoginService())
+                .environmentObject(AuthenticationViewModel())
         }
     }
 }

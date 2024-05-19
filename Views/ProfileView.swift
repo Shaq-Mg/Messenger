@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ProfileView: View {
-    @EnvironmentObject var vm: LoginService
+    @EnvironmentObject var vm: AuthenticationViewModel
     
     var body: some View {
         List {
@@ -27,7 +27,6 @@ struct ProfileView: View {
                         .font(.headline)
                 }
             }
-            ProfileHeader()
             
             AccountInfoSection()
             Button {
@@ -59,38 +58,12 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView()
-            .environmentObject(LoginService())
-    }
-}
-
-struct ProfileHeader: View {
-    @EnvironmentObject var vm: LoginService
-    var body: some View {
-        if let user = vm.user {
-            HStack(spacing: 14){
-                Text("Photo")
-                    .font(.title)
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.white)
-                    .frame(width: 70, height: 70)
-                    .background(Color(.systemGray3))
-                    .clipShape(Circle())
-                
-                VStack(alignment: .leading, spacing: 6) {
-                    Text(vm.username)
-                        .font(.headline)
-                    
-                    Text("@\(vm.username)")
-                        .font(.callout)
-                        .foregroundStyle(.gray)
-                }
-            }
-        }
+            .environmentObject(AuthenticationViewModel())
     }
 }
 
 struct AccountInfoSection: View {
-    @EnvironmentObject var vm: LoginService
+    @EnvironmentObject var vm: AuthenticationViewModel
     var body: some View {
         Section(header: Text("Account Info")) {
             LabeledContent {

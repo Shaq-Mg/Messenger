@@ -10,8 +10,7 @@ import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
 
-final class LoginService: ObservableObject {
-    @Published var user: User?
+final class AuthenticationViewModel: ObservableObject {
     @Published var loginStatusMessage = ""
     @Published var isLoggedOut = true
     @Published var showSignOutAlert = false
@@ -24,12 +23,12 @@ final class LoginService: ObservableObject {
     @Published var password = ""
     @Published var confirmPassword = ""
     
-    init() {
-        
-    }
+    let manager = FirebaseManger.shared
+    
+    init() { }
     
     func signUp() {
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+        manager.auth.createUser(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("Failed to create user:", error)
                 self.loginStatusMessage = "Failed to create user: \(error)"
@@ -37,12 +36,13 @@ final class LoginService: ObservableObject {
             }
             print("Successfully created user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully created user: \(result?.user.uid ?? "")"
+            self.persistImageToStorage()
             return
         }
     }
     
     func signIn(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+        manager.auth.signIn(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("Failed to sign in user:", error)
                 self.loginStatusMessage = "Failed to sign in user: \(error)"
@@ -51,21 +51,19 @@ final class LoginService: ObservableObject {
             print("Successfully signed in as user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully signed in as user: \(result?.user.uid ?? "")"
             return
-            
-            self.persistImageToStorage()
         }
     }
     
     func signOut() {
         do {
-            try Auth.auth().signOut()
+            try manager.auth.signOut()
         } catch {
             self.loginStatusMessage = "Error: failed to sign out user\(Auth.auth().currentUser?.uid ?? "")"
         }
     }
     private func persistImageToStorage() {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let ref = Storage.storage().reference(withPath: uid)
+        guard let uid = manager.auth.currentUser?.uid else { return }
+        let ref = manager.storage.reference(withPath: uid)
         guard let imageData = self.image?.jpegData(compressionQuality: 0.5) else { return }
         ref.putData(imageData, metadata: nil) { metadata, error in
             if let error = error {
@@ -87,8 +85,8 @@ final class LoginService: ObservableObject {
     }
     
     private func storeUserInformation(profileImageUrl: URL) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        let userData = ["email": self.email, "username": self.username, "password": self.password, "uid": uid, "profileImageUrl": profileImageUrl.absoluteString]
+        guard let uid = manager.auth.currentUser?.uid else { return }
+        let userData = ["email": self.email, "username": self.username, "password": self.password, "uid": uid]
         Firestore.firestore().collection("users")
             .document(uid).setData(userData) {  error in
                 if let error = error {

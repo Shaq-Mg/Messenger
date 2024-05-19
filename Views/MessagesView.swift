@@ -37,12 +37,13 @@ struct MessagesView: View {
                     }
                 }
             }
+            .padding(.horizontal)
             .fullScreenCover(isPresented: $vm.isLoggedOut, onDismiss: nil) {
                 LoginView(didCompleteLoginProcess: {
                     vm.isLoggedOut = true
                     vm.fetchCurrentUser()
                 })
-                    .environmentObject(LoginService())
+                    .environmentObject(AuthenticationViewModel())
             }
 //            .overlay(
 //                Button(action: {
