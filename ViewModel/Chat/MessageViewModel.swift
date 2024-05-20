@@ -30,23 +30,21 @@ class MessagesViewModel: ObservableObject {
             return
         }
         manager.firebase.collection("users")
-            .document(uid).getDocument { documentSnapshot, error in
+            .document(uid).getDocument { snapshot, error in
                 if let error = error {
                     self.errorMessage = "Failed to fetch current user: \(error)"
                     print("Failed to fetch current user:", error)
                     return
                 }
-                guard let data = documentSnapshot?.data() else {
+                guard let data = snapshot?.data() else {
                     self.errorMessage = "No data found"
                     return
                 }
                 let uid = data["uid"] as? String ?? ""
-                let photoImageUrl = data["photoImageUrl"] as? String ?? ""
                 let username = data["username"] as? String ?? ""
                 let email = data["email"] as? String ?? ""
-                let password = data["password"] as? String ?? ""
-                
-                self.chatUser = ChatUser(uid: uid, photoImageUrl: photoImageUrl, username: username, email: email, password: password)
+                let profileImageUrl = data["profileImageUrl"] as? String ?? ""
+                self.chatUser = ChatUser(uid: uid, photoImageUrl: profileImageUrl, username: username, email: email)
             }
     }
 }
