@@ -40,7 +40,7 @@ struct MessagesView: View {
             .padding(.horizontal)
             .fullScreenCover(isPresented: $vm.isLoggedOut, onDismiss: nil) {
                 LoginView(didCompleteLoginProcess: {
-                    vm.isLoggedOut = true
+                    vm.isLoggedOut = false
                     vm.fetchCurrentUser()
                 })
                     .environmentObject(AuthenticationViewModel())

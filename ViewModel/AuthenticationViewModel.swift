@@ -25,7 +25,11 @@ final class AuthenticationViewModel: ObservableObject {
     
     let manager = FirebaseManger.shared
     
-    init() { }
+    init() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            self.isLoggedOut = Auth.auth().currentUser?.uid == nil
+        }
+    }
     
     func createUser() {
         manager.auth.createUser(withEmail: email, password: password) { result, error in
@@ -40,25 +44,11 @@ final class AuthenticationViewModel: ObservableObject {
         }
     }
     
-    func signIn(email: String, password: String) {
-        manager.auth.signIn(withEmail: email, password: password) { result, error in
-            if let error = error {
-                print("Failed to sign in user:", error)
-                self.loginStatusMessage = "Failed to sign in user: \(error)"
-                return
-            }
-            print("Successfully signed in as user: \(result?.user.uid ?? "")")
-            self.loginStatusMessage = "Successfully signed in as user: \(result?.user.uid ?? "")"
-        }
+    func signOut() {
+        isLoggedOut.toggle()
+        try? manager.auth.signOut()
     }
     
-    func signOut() {
-        do {
-            try manager.auth.signOut()
-        } catch {
-            self.loginStatusMessage = "Error: failed to sign out user\(Auth.auth().currentUser?.uid ?? "")"
-        }
-    }
     private func persistImageToStorage() {
         guard let uid = manager.auth.currentUser?.uid else { return }
         let ref = manager.storage.reference(withPath: uid)

@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct LoginView: View {
-    let didCompleteLoginProcess: () -> ()
     @EnvironmentObject var viewModel: AuthenticationViewModel
-    @Environment(\.dismiss) var dismiss
+    let didCompleteLoginProcess: () -> ()
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -23,13 +23,11 @@ struct LoginView: View {
                         InputView(text: $viewModel.password, title: "Password", placeholder: "password", isSecureField: true)
                     }
                     Button {
-                        viewModel.signIn(email: viewModel.email, password: viewModel.password)
-                        didCompleteLoginProcess()
+                        signIn()
                         if formIsValid {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                            withAnimation(.easeOut(duration: 1.0)) {
                                 viewModel.email = ""
                                 viewModel.password = ""
-                                dismiss()
                             }
                         }
                     } label: {
@@ -50,6 +48,18 @@ struct LoginView: View {
         }
         .navigationTitle("Sign In")
         .navigationBarBackButtonHidden(true)
+    }
+   private func signIn() {
+       viewModel.manager.auth.signIn(withEmail: viewModel.email, password: viewModel.password) { result, error in
+            if let error = error {
+                print("Failed to sign in user:", error)
+                viewModel.loginStatusMessage = "Failed to sign in user: \(error)"
+                return
+            }
+            print("Successfully signed in as user: \(result?.user.uid ?? "")")
+           viewModel.loginStatusMessage = "Successfully signed in as user: \(result?.user.uid ?? "")"
+           self.didCompleteLoginProcess()
+        }
     }
 }
 

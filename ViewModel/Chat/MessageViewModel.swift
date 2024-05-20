@@ -18,7 +18,7 @@ class MessagesViewModel: ObservableObject {
     let manager = FirebaseManger.shared
     
     init() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.isLoggedOut = Auth.auth().currentUser?.uid == nil
         }
         fetchCurrentUser()
