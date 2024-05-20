@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Firebase
 import FirebaseFirestore
 import FirebaseAuth
 import FirebaseStorage
@@ -16,10 +17,9 @@ final class AuthenticationViewModel: ObservableObject {
     @Published var showSignOutAlert = false
     
     @Published var image: UIImage?
-    
     @Published var email = ""
     @Published var username = ""
-    @Published var photoURL = ""
+    @Published var photoImageUrl = ""
     @Published var password = ""
     @Published var confirmPassword = ""
     
@@ -27,7 +27,7 @@ final class AuthenticationViewModel: ObservableObject {
     
     init() { }
     
-    func signUp() {
+    func createUser() {
         manager.auth.createUser(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("Failed to create user:", error)
@@ -37,7 +37,6 @@ final class AuthenticationViewModel: ObservableObject {
             print("Successfully created user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully created user: \(result?.user.uid ?? "")"
             self.persistImageToStorage()
-            return
         }
     }
     
@@ -50,7 +49,6 @@ final class AuthenticationViewModel: ObservableObject {
             }
             print("Successfully signed in as user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully signed in as user: \(result?.user.uid ?? "")"
-            return
         }
     }
     

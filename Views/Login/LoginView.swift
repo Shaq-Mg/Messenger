@@ -25,8 +25,12 @@ struct LoginView: View {
                     Button {
                         viewModel.signIn(email: viewModel.email, password: viewModel.password)
                         didCompleteLoginProcess()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            dismiss()
+                        if formIsValid {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                viewModel.email = ""
+                                viewModel.password = ""
+                                dismiss()
+                            }
                         }
                     } label: {
                         Text("Sign In")
@@ -55,5 +59,13 @@ struct LoginView_Previews: PreviewProvider {
             LoginView(didCompleteLoginProcess: { })
                 .environmentObject(AuthenticationViewModel())
         }
+    }
+}
+extension LoginView: AuthFormProtocol {
+    var formIsValid: Bool {
+        return !viewModel.email.isEmpty
+        && viewModel.email.contains("@")
+        && !viewModel.password.isEmpty
+        && viewModel.password.count > 4
     }
 }

@@ -26,9 +26,17 @@ struct SignUpView: View {
                         InputView(text: $viewModel.confirmPassword, title: "Confirm Passowrd", placeholder: "Confirm password", isSecureField: true)
                     }
                     Button {
-                        viewModel.signUp()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                           dismiss()
+                        viewModel.createUser()
+                        if formIsValid {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                                withAnimation(.easeOut(duration: 1.0)) {
+                                    viewModel.username = ""
+                                    viewModel.email = ""
+                                    viewModel.password = ""
+                                    viewModel.confirmPassword = ""
+                                    dismiss()
+                                }
+                            }
                         }
                     } label: {
                         Text("Sign Up")
@@ -58,5 +66,16 @@ struct SignUpView_Previews: PreviewProvider {
             SignUpView()
                 .environmentObject(AuthenticationViewModel())
         }
+    }
+}
+extension SignUpView {
+    var formIsValid: Bool {
+        return !viewModel.email.isEmpty
+        && viewModel.email.contains("@")
+        && !viewModel.username.isEmpty
+        && viewModel.username.count > 3
+        && !viewModel.password.isEmpty
+        && viewModel.password.count > 4
+        && viewModel.confirmPassword == viewModel.password
     }
 }
