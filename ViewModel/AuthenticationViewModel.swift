@@ -31,7 +31,7 @@ final class AuthenticationViewModel: ObservableObject {
         }
     }
     
-    func createUser() {
+    func createAccount() {
         manager.auth.createUser(withEmail: email, password: password) { result, error in
             if let error = error {
                 print("Failed to create user:", error)
@@ -41,12 +41,32 @@ final class AuthenticationViewModel: ObservableObject {
             print("Successfully created user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully created user: \(result?.user.uid ?? "")"
             self.persistImageToStorage()
+            Task {
+                try await self.createNewUser(user:)
+            }
         }
     }
     
     func signOut() {
         isLoggedOut.toggle()
         try? manager.auth.signOut()
+    }
+    
+    func deleteAccount() async throws {
+        guard let user = manager.auth.currentUser else { return
+            // handle error here
+        }
+        try await user.delete()
+    }
+    
+    private func createNewUser(user: ChatUser) async throws {
+        let userData: [String: Any] = [
+            "photImageUrl" : user.photoImageUrl,
+            "username" : user.username,
+            "email" : user.email,
+            "date_created" : Timestamp()
+        ]
+        try await manager.firestore.collection("users").document(user.uid).setData(userData, merge: false)
     }
     
     private func persistImageToStorage() {

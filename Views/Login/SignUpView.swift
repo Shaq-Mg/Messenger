@@ -26,7 +26,7 @@ struct SignUpView: View {
                         InputView(text: $viewModel.confirmPassword, title: "Confirm Passowrd", placeholder: "Confirm password", isSecureField: true)
                     }
                     Button {
-                        viewModel.createUser()
+                        viewModel.createAccount()
                         if formIsValid {
                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                                 withAnimation(.easeOut(duration: 1.0)) {

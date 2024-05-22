@@ -36,7 +36,9 @@ struct ProfileView: View {
                     .font(.headline)
             }
             Button {
-                
+                Task {
+                    try await vm.deleteAccount()
+                }
             } label: {
                 Text("Delete Acount")
                     .foregroundStyle(.red)

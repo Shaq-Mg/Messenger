@@ -29,7 +29,7 @@ class MessagesViewModel: ObservableObject {
             self.errorMessage = "Could not find firebase uid"
             return
         }
-        manager.firebase.collection("users")
+        manager.firestore.collection("users")
             .document(uid).getDocument { snapshot, error in
                 if let error = error {
                     self.errorMessage = "Failed to fetch current user: \(error)"
