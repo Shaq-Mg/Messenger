@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct NewMessageView: View {
+    @ObservedObject var vm = NewMessageViewModel()
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
             ScrollView {
-                ForEach(0..<8) { num in
-                    Text("New meassage")
+                ForEach(vm.users) { user in
+                    VStack(alignment: .leading) {
+                        Text(user.username)
+                            .font(.headline)
+                        Text(user.email)
+                            .foregroundStyle(.secondary)
+                    }
                 }
             }.navigationTitle("New Message")
                 .toolbar {

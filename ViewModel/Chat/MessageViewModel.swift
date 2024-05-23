@@ -40,11 +40,7 @@ class MessagesViewModel: ObservableObject {
                     self.errorMessage = "No data found"
                     return
                 }
-                let uid = data["uid"] as? String ?? ""
-                let username = data["username"] as? String ?? ""
-                let email = data["email"] as? String ?? ""
-                let profileImageUrl = data["profileImageUrl"] as? String ?? ""
-                self.chatUser = ChatUser(uid: uid, photoImageUrl: profileImageUrl, username: username, email: email)
+                self.chatUser = .init(data: data)
             }
     }
 }
