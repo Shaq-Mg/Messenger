@@ -36,9 +36,7 @@ struct ProfileView: View {
                     .font(.headline)
             }
             Button {
-                Task {
-                    try await vm.deleteAccount()
-                }
+                vm.showDeleteAccountAlert.toggle()
             } label: {
                 Text("Delete Acount")
                     .foregroundStyle(.red)
@@ -46,6 +44,17 @@ struct ProfileView: View {
             }
         }
         .navigationTitle("My Account")
+        .actionSheet(isPresented: $vm.showDeleteAccountAlert, content: {
+            .init(title: Text("Delete").bold(), message: Text("Are you sure that you want to delete your account?"), buttons: [
+                .destructive(Text("Yes").bold(), action: {
+                    Task {
+                        try await vm.deleteAccount()
+                    }
+                    vm.loginStatusMessage = ""
+                }),
+                .cancel()
+            ])
+        })
         .actionSheet(isPresented: $vm.showSignOutAlert, content: {
             .init(title: Text("Sign Out").bold(), message: Text("Are you sure that you want to sign out your account?"), buttons: [
                 .destructive(Text("Yes").bold(), action: {

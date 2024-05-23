@@ -15,6 +15,7 @@ final class AuthenticationViewModel: ObservableObject {
     @Published var loginStatusMessage = ""
     @Published var isLoggedOut = true
     @Published var showSignOutAlert = false
+    @Published var showDeleteAccountAlert = false
     
     @Published var image: UIImage?
     @Published var email = ""
@@ -40,10 +41,8 @@ final class AuthenticationViewModel: ObservableObject {
             }
             print("Successfully created user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully created user: \(result?.user.uid ?? "")"
-            self.persistImageToStorage()
-            Task {
-                try await self.createNewUser(user:)
-            }
+            //            self.persistImageToStorage()
+            self.createNewUser()
         }
     }
     
@@ -59,14 +58,18 @@ final class AuthenticationViewModel: ObservableObject {
         try await user.delete()
     }
     
-    private func createNewUser(user: ChatUser) async throws {
-        let userData: [String: Any] = [
-            "photImageUrl" : user.photoImageUrl,
-            "username" : user.username,
-            "email" : user.email,
-            "date_created" : Timestamp()
-        ]
-        try await manager.firestore.collection("users").document(user.uid).setData(userData, merge: false)
+    private func createNewUser() {
+        guard let uid = manager.auth.currentUser?.uid else { return }
+        let userData = ["email": self.email, "username": self.username, "password": self.password, "uid": uid]
+        Firestore.firestore().collection("users")
+            .document(uid).setData(userData) {  error in
+                if let error = error {
+                    print(error)
+                    self.loginStatusMessage = "Failed to store user information to database: \(error)"
+                    return
+                }
+                print("Success")
+            }
     }
     
     private func persistImageToStorage() {
@@ -99,7 +102,7 @@ final class AuthenticationViewModel: ObservableObject {
             .document(uid).setData(userData) {  error in
                 if let error = error {
                     print(error)
-                    self.loginStatusMessage = "\(error)"
+                    self.loginStatusMessage = "Failed to store user information to database \(error)"
                     return
                 }
                 print("Success")
