@@ -61,8 +61,8 @@ final class AuthenticationViewModel: ObservableObject {
     private func createNewUser() {
         guard let uid = manager.auth.currentUser?.uid else { return }
         let userData = ["email": self.email, "username": self.username, "password": self.password, "uid": uid]
-        Firestore.firestore().collection("users")
-            .document(uid).setData(userData) {  error in
+        manager.firestore.collection("users")
+            .document(uid).setData(userData, merge: false) { error in
                 if let error = error {
                     print(error)
                     self.loginStatusMessage = "Failed to store user information to database: \(error)"

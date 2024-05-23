@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MessagesView: View {
     @ObservedObject var vm = MessagesViewModel()
+    @State private var showNewMessageScreen = false
     var body: some View {
         NavigationStack {
             VStack {
@@ -38,24 +39,27 @@ struct MessagesView: View {
                 }
             }
             .padding(.horizontal)
+            .fullScreenCover(isPresented: $showNewMessageScreen, content: {
+                NewMessageView()
+            })
             .fullScreenCover(isPresented: $vm.isLoggedOut, onDismiss: nil) {
                 LoginView(didCompleteLoginProcess: {
                     vm.isLoggedOut = false
                     vm.fetchCurrentUser()
                 })
-                    .environmentObject(AuthenticationViewModel())
+                .environmentObject(AuthenticationViewModel())
             }
-//            .overlay(
-//                Button(action: {
-//
-//                }, label: {
-//                    Image(systemName: "plus")
-//                        .font(.system(size: 24, weight: .bold))
-//                        .padding(6)
-//                        .background(Circle().stroke(lineWidth: 3))
-//                        .foregroundStyle(.mint)
-//                }),
-//                alignment: .bottom)
+            .overlay(
+                Button(action: {
+                    showNewMessageScreen.toggle()
+                }, label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 24, weight: .bold))
+                        .padding(6)
+                        .background(Circle().stroke(lineWidth: 3))
+                        .foregroundStyle(.mint)
+                }),
+                alignment: .bottom)
         }
     }
 }
