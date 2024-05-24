@@ -12,20 +12,27 @@ struct ChatMessageView: View {
     
     var body: some View {
         VStack {
-            titleRow
-            ScrollView {
-
+            VStack {
+                titleRow
+                ScrollView {
+                    
                 }
             }
+            MessageField()
         }
+    }
     
     private var titleRow: some View {
         HStack(spacing: 20) {
             Circle()
-                .frame(width: 40, height: 40)
-            Spacer()
-            Text(chatUser?.username ?? "user")
-                .font(.system(size: 20, weight: .semibold))
+                .frame(width: 50, height: 50)
+            VStack(alignment: .leading) {
+                Text(chatUser?.username ?? "user")
+                    .font(.system(size: 20, weight: .semibold))
+                Text(chatUser?.email ?? "")
+                    .foregroundStyle(.secondary)
+                    .font(.callout)
+            }
             
             Spacer()
             Button {
