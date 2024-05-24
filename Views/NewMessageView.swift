@@ -9,17 +9,24 @@ import SwiftUI
 
 struct NewMessageView: View {
     @ObservedObject var vm = NewMessageViewModel()
+    let didSelectNewUser: (ChatUser) -> ()
     @Environment(\.dismiss) var dismiss
     var body: some View {
         NavigationStack {
             ScrollView {
                 ForEach(vm.users) { user in
-                    VStack(alignment: .leading) {
-                        Text(user.username)
-                            .font(.headline)
-                        Text(user.email)
-                            .foregroundStyle(.secondary)
+                    Button {
+                        dismiss()
+                        didSelectNewUser(user)
+                    } label: {
+                        VStack(alignment: .leading) {
+                            Text(user.username)
+                                .font(.headline)
+                            Text(user.email)
+                                .foregroundStyle(.secondary)
+                        }
                     }
+
                 }
             }.navigationTitle("New Message")
                 .toolbar {
@@ -39,6 +46,6 @@ struct NewMessageView: View {
 
 struct NewMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        NewMessageView()
+        NewMessageView(didSelectNewUser: { _ in })
     }
 }

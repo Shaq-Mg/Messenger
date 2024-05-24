@@ -15,32 +15,16 @@ struct MessagesView: View {
             VStack {
                 Text("Current user id: \(vm.errorMessage)")
                 MessagesDisplayBar(vm: vm)
-                ScrollView {
-                    ForEach(0..<8) { item in
-                        HStack {
-                            Circle()
-                                .frame(width: 40, height: 40)
-                            
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text("Email")
-                                    .font(.system(size: 18, weight: .semibold))
-                                Text("Message")
-                                    .font(.callout)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                            Text("Time")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                        }
-                        Divider()
-                            .padding(.vertical, 6)
-                    }
-                }
+                MessageListView()
+
             }
             .padding(.horizontal)
             .fullScreenCover(isPresented: $showNewMessageScreen, content: {
-                NewMessageView()
+                NewMessageView(didSelectNewUser: { user in
+                    vm.navigateToChatMessageView.toggle()
+                    vm.chatUser = user
+                    print(user.email)
+                })
             })
             .fullScreenCover(isPresented: $vm.isLoggedOut, onDismiss: nil) {
                 LoginView(didCompleteLoginProcess: {
@@ -89,5 +73,37 @@ struct MessagesDisplayBar: View {
             }
         }
         .padding(.vertical)
+    }
+}
+
+struct MessageListView: View {
+    var body: some View {
+        ScrollView {
+            ForEach(0..<8) { item in
+                NavigationLink {
+                    ChatMessageView()
+                } label: {
+                    HStack {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Email")
+                                .font(.system(size: 18, weight: .semibold))
+                            Text("Message")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Text("Time")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    Divider()
+                        .padding(.vertical, 6)
+                }
+
+            }
+        }
     }
 }

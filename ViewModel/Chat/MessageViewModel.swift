@@ -14,6 +14,7 @@ class MessagesViewModel: ObservableObject {
     @Published var chatUser: ChatUser?
     @Published var errorMessage = ""
     @Published var isLoggedOut = true
+    @Published var navigateToChatMessageView = true
     
     let manager = FirebaseManger.shared
     
