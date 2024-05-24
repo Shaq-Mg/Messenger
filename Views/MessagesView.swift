@@ -13,11 +13,11 @@ struct MessagesView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Current user id: \(vm.errorMessage)")
                 MessagesDisplayBar(vm: vm)
-                MessageListView()
-
+                messageListView
+                
             }
+            .navigationBarBackButtonHidden(true)
             .padding(.horizontal)
             .fullScreenCover(isPresented: $showNewMessageScreen, content: {
                 NewMessageView(didSelectNewUser: { user in
@@ -44,6 +44,35 @@ struct MessagesView: View {
                         .foregroundStyle(.mint)
                 }),
                 alignment: .bottom)
+        }
+    }
+    private var messageListView: some View {
+        ScrollView {
+            ForEach(0..<8) { item in
+                NavigationLink {
+                    ChatMessageView(chatUser: vm.chatUser)
+                } label: {
+                    HStack {
+                        Circle()
+                            .frame(width: 40, height: 40)
+                        
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("Email")
+                                .font(.system(size: 18, weight: .semibold))
+                            Text("Message")
+                                .font(.callout)
+                                .foregroundStyle(.secondary)
+                        }
+                        Spacer()
+                        Text("Time")
+                            .font(.caption)
+                            .foregroundStyle(.secondary)
+                    }
+                    Divider()
+                        .padding(.vertical, 6)
+                }
+
+            }
         }
     }
 }
@@ -73,37 +102,5 @@ struct MessagesDisplayBar: View {
             }
         }
         .padding(.vertical)
-    }
-}
-
-struct MessageListView: View {
-    var body: some View {
-        ScrollView {
-            ForEach(0..<8) { item in
-                NavigationLink {
-                    ChatMessageView()
-                } label: {
-                    HStack {
-                        Circle()
-                            .frame(width: 40, height: 40)
-                        
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text("Email")
-                                .font(.system(size: 18, weight: .semibold))
-                            Text("Message")
-                                .font(.callout)
-                                .foregroundStyle(.secondary)
-                        }
-                        Spacer()
-                        Text("Time")
-                            .font(.caption)
-                            .foregroundStyle(.secondary)
-                    }
-                    Divider()
-                        .padding(.vertical, 6)
-                }
-
-            }
-        }
     }
 }
