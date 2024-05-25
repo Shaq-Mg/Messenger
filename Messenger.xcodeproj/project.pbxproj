@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		465B76682C01E9F800D410DF /* FirebaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465B76672C01E9F800D410DF /* FirebaseConstants.swift */; };
 		46695E512BFF6B7100E7D59D /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46695E502BFF6B7100E7D59D /* NewMessageView.swift */; };
 		46695E532BFF6F7300E7D59D /* NewMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46695E522BFF6F7300E7D59D /* NewMessageViewModel.swift */; };
 		46791CD92C00BBF300D5512A /* ChatMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46791CD82C00BBF300D5512A /* ChatMessageView.swift */; };
@@ -55,6 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		465B76672C01E9F800D410DF /* FirebaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConstants.swift; sourceTree = "<group>"; };
 		46695E502BFF6B7100E7D59D /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
 		46695E522BFF6F7300E7D59D /* NewMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewModel.swift; sourceTree = "<group>"; };
 		46791CD82C00BBF300D5512A /* ChatMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageView.swift; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				467CC8032BFB62EB00E7FCD1 /* AuthFormProtocol.swift */,
+				465B76672C01E9F800D410DF /* FirebaseConstants.swift */,
 				46FBFABA2BFAA31E00E24F12 /* FirebaseManager.swift */,
 			);
 			path = Authentication;
@@ -413,6 +416,7 @@
 				4685F6792BFA55E0000554D8 /* MessagesView.swift in Sources */,
 				46EA840C2BF7F04000BB2C1F /* LoginView.swift in Sources */,
 				46791CE12C00E8B300D5512A /* ChatMessageViewModel.swift in Sources */,
+				465B76682C01E9F800D410DF /* FirebaseConstants.swift in Sources */,
 				46EA83F92BF7E89900BB2C1F /* AuthenticationViewModel.swift in Sources */,
 				46695E532BFF6F7300E7D59D /* NewMessageViewModel.swift in Sources */,
 				4685F67E2BFA6D91000554D8 /* ProfileView.swift in Sources */,

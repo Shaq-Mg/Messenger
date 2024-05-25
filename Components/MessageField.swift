@@ -8,7 +8,15 @@
 import SwiftUI
 
 struct MessageField: View {
-    @State private var message = ""
+    @ObservedObject var vm: ChatMessageViewModel
+    
+    let chatUser: ChatUser?
+    
+    init(chatUser: ChatUser?) {
+        self.chatUser = chatUser
+        self.vm = .init(chatUser: chatUser)
+    }
+    
     var body: some View {
         HStack {
             Button {
@@ -19,10 +27,10 @@ struct MessageField: View {
             }
             
             HStack {
-                CustomTextField(placeholder: Text("Description"), text: $message)
+                CustomTextField(placeholder: Text("Description"), text: $vm.chatText)
                 
                 Button {
-                   print("Message sent!")
+                    vm.sendMessage()
                 } label: {
                     Image(systemName: "paperplane.fill")
                         .foregroundStyle(.white)
@@ -41,11 +49,11 @@ struct MessageField: View {
     }
 }
 
-struct MessageField_Previews: PreviewProvider {
-    static var previews: some View {
-        MessageField()
-    }
-}
+//struct MessageField_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MessageField()
+//    }
+//}
 
 struct CustomTextField: View {
     var placeholder: Text

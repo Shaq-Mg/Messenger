@@ -6,10 +6,12 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestoreSwift
 
 struct Message: Identifiable, Codable {
-    var id: String
-    var text: String
-    var received: Bool
-    var timestamp: Date
+    @DocumentID var id: String?
+    let fromId, toId: String
+    let username, email, text: String
+    let timestamp: Date
 }

@@ -11,31 +11,54 @@ struct ChatMessageRow: View {
     @State private var showTime = false
     let message: Message
     var body: some View {
-        VStack(alignment: message.received ? .leading : .trailing) {
-            HStack {
-                Text(message.text)
-                    .padding()
-                    .background(message.received ? .gray.opacity(0.2) : .mint.opacity(0.2))
-                    .cornerRadius(20)
+        if message.fromId == FirebaseManger.shared.auth.currentUser?.uid {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(message.text)
+                        .padding()
+                        .background(.gray.opacity(0.2))
+                        .cornerRadius(20)
+                }
+                .frame(maxWidth: 300, alignment: .leading)
+                .onTapGesture {
+                    showTime.toggle()
+                }
+                if showTime {
+                    Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                        .padding(.leading)
+                }
             }
-            .frame(maxWidth: 300, alignment: message.received ? .leading : .trailing)
-            .onTapGesture {
-                showTime.toggle()
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.leading)
+        } else {
+            VStack(alignment: .trailing) {
+                HStack {
+                    Text(message.text)
+                        .padding()
+                        .background(.mint.opacity(0.2))
+                        .cornerRadius(20)
+                }
+                .frame(maxWidth: 300, alignment: .trailing)
+                .onTapGesture {
+                    showTime.toggle()
+                }
+                if showTime {
+                    Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                        .padding(.trailing)
+                }
             }
-            if showTime {
-                Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
-                    .font(.caption2)
-                    .foregroundColor(.secondary)
-                    .padding(message.received ? .leading : .trailing)
-            }
+            .frame(maxWidth: .infinity, alignment: .trailing)
+            .padding(.trailing)
         }
-        .frame(maxWidth: .infinity, alignment: message.received ? .leading : .trailing)
-        .padding(message.received ? .leading : .trailing)
     }
 }
 
 struct ChatMessageRow_Previews: PreviewProvider {
     static var previews: some View {
-        ChatMessageRow(message: Message(id: "1234", text: "Good morning, world!", received: false, timestamp: Date()))
+        ChatMessageRow(message: Message(fromId: "", toId: "", username: "Saka", email: "saka@gmail.com", text: "Good morning, world!", timestamp: Date()))
     }
 }

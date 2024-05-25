@@ -11,34 +11,107 @@ import FirebaseFirestoreSwift
 
 class ChatMessageViewModel: ObservableObject {
     @Published private(set) var messages: [Message] = []
-    let db = Firestore.firestore()
+    @Published var errorMessage = ""
+    @Published var chatText = ""
+    @Published var messageCount = 0
     
-    init() {
-        fetchMessage()
+    let scrollToId =  "Empty"
+    let chatUser: ChatUser?
+    let manager = FirebaseManger.shared
+    
+    init(chatUser: ChatUser?) {
+        self.chatUser = chatUser
+        
+        fetchMessages()
     }
-    private func fetchMessage() {
-        db.collection("messages").addSnapshotListener { querySnapshot, error in
-            guard let documents = querySnapshot?.documents else {
-                print("Error fetching documents \(String(describing: error))")
+    
+    private func fetchMessages() {
+        guard let fromId = manager.auth.currentUser?.uid else { return }
+        guard let toId = chatUser?.uid else { return }
+        manager.firestore
+            .collection("messages")
+            .document(fromId)
+            .collection(toId)
+            .order(by: "timestamp")
+            .addSnapshotListener { querySnapshot, error in
+                if let error = error {
+                    self.errorMessage = "Failed to listen for messages: \(error)"
+                    print(error)
+                    return
+                }
+                querySnapshot?.documentChanges.forEach({ change in
+                    if change.type == .added {
+                        let data = change.document.data()
+//                        self.messages.append(.init(documentId: change.document.documentID, data: data))
+                    }
+                })
+                
+                DispatchQueue.main.async {
+                    self.messageCount += 1
+                }
+            }
+    }
+    
+    func sendMessage() {
+        guard let fromId = manager.auth.currentUser?.uid else { return }
+        guard let toId = chatUser?.uid else { return }
+        
+        let document = manager.firestore.collection("messages")
+            .document(fromId)
+            .collection(toId)
+            .document()
+        
+        let messageData = [FirebaseConstants.fromId: fromId, FirebaseConstants.toId: toId, FirebaseConstants.text: self.chatText, "timestamp": Timestamp()] as [String : Any]
+        
+        document.setData(messageData) { error in
+            if let error = error {
+                self.errorMessage = "Failed to save message into Firestore \(error)"
                 return
             }
-            self.messages = documents.compactMap({ document -> Message? in
-                do {
-                    return try document.data(as: Message.self)
-                } catch {
-                    print("Error decoding documnet into message: \(error)")
-                    return nil
-                }
-            })
+            print("Successfully saved current user sending message")
+            
+            self.chatText = ""
+            self.messageCount += 1
+        }
+        let recieverMessageDocument = manager.firestore.collection("messages")
+            .document(toId)
+            .collection(fromId)
+            .document()
+        
+        recieverMessageDocument.setData(messageData) { error in
+            if let error = error {
+                self.errorMessage = "Failed to save message into Firestore \(error)"
+                return
+            }
+            print("Successfully saved current user sending message")
         }
     }
     
-    func sendMessage(text: String) {
-        do {
-            let newMessage = Message(id: "\(UUID())", text: text, received: false, timestamp: Date())
-            try db.collection("meesages").document().setData(from: newMessage)
-        } catch {
-            print("Error adding message to firestore: \(error)")
-        }
-    }
+//    private func persistRecentMessage() {
+//
+//        guard let uid = manager.auth.currentUser?.uid else { return }
+//        guard let toId = self.chatUser?.uid else { return }
+//
+//        let document = manager.firestore
+//            .collection("recent_message")
+//            .document(uid)
+//            .collection("messages")
+//            .document(toId)
+//
+//        let data = [
+//            FirebaseConstants.timestamp: Timestamp(),
+//            FirebaseConstants.text: self.chatText,
+//            FirebaseConstants.fromId: uid,
+//            FirebaseConstants.toId: toId,
+//            FirebaseConstants.username: chatUser?.username ?? "username"
+//        ] as [String : Any]
+//
+//        // I need to save another similiar dictionary for the recipient of this message...how?
+//        document.setData(data) { error in
+//            if let error = error {
+//                self.errorMessage = "Failed to save recent message: \(error)"
+//                return
+//            }
+//        }
+//    }
 }
