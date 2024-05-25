@@ -48,7 +48,7 @@ struct MessagesView: View {
     }
     private var messageListView: some View {
         ScrollView {
-            ForEach(0..<8) { item in
+            ForEach(vm.recentMessages) { recentMessage in
                 NavigationLink {
                     ChatMessageView(chatUser: vm.chatUser)
                 } label: {
@@ -57,14 +57,15 @@ struct MessagesView: View {
                             .frame(width: 40, height: 40)
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(vm.chatUser?.username ?? "")
+                            Text(recentMessage.username)
                                 .font(.system(size: 18, weight: .semibold))
-                            Text("Message")
+                            Text(recentMessage.text)
                                 .font(.callout)
                                 .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.leading)
                         }
                         Spacer()
-                        Text("Time")
+                        Text("\(recentMessage.timestamp)")
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }

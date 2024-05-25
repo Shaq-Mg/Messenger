@@ -12,6 +12,6 @@ import FirebaseFirestoreSwift
 struct Message: Identifiable, Codable {
     @DocumentID var id: String?
     let fromId, toId: String
-    let username, email, text: String
-    let timestamp: Date
+    let username, photoImageUrl, email, text: String
+    let timestamp: Timestamp
 }
