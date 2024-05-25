@@ -70,6 +70,8 @@ class ChatMessageViewModel: ObservableObject {
             }
             print("Successfully saved current user sending message")
             
+            self.persistRecentMessage()
+            
             self.chatText = ""
             self.messageCount += 1
         }
@@ -87,31 +89,32 @@ class ChatMessageViewModel: ObservableObject {
         }
     }
     
-//    private func persistRecentMessage() {
-//
-//        guard let uid = manager.auth.currentUser?.uid else { return }
-//        guard let toId = self.chatUser?.uid else { return }
-//
-//        let document = manager.firestore
-//            .collection("recent_message")
-//            .document(uid)
-//            .collection("messages")
-//            .document(toId)
-//
-//        let data = [
-//            FirebaseConstants.timestamp: Timestamp(),
-//            FirebaseConstants.text: self.chatText,
-//            FirebaseConstants.fromId: uid,
-//            FirebaseConstants.toId: toId,
-//            FirebaseConstants.username: chatUser?.username ?? "username"
-//        ] as [String : Any]
-//
-//        // I need to save another similiar dictionary for the recipient of this message...how?
-//        document.setData(data) { error in
-//            if let error = error {
-//                self.errorMessage = "Failed to save recent message: \(error)"
-//                return
-//            }
-//        }
-//    }
+    private func persistRecentMessage() {
+        guard let chatUser = chatUser else { return }
+        guard let uid = manager.auth.currentUser?.uid else { return }
+        guard let toId = self.chatUser?.uid else { return }
+
+        let document = manager.firestore
+            .collection("recent_message")
+            .document(uid)
+            .collection("messages")
+            .document(toId)
+
+        let data = [
+            FirebaseConstants.timestamp: Timestamp(),
+            FirebaseConstants.text: self.chatText,
+            FirebaseConstants.fromId: uid,
+            FirebaseConstants.toId: toId,
+            FirebaseConstants.photoImageUrl: chatUser.photoImageUrl,
+            FirebaseConstants.username: chatUser.username
+        ] as [String : Any]
+
+        // I need to save another similiar dictionary for the recipient of this message...how?
+        document.setData(data) { error in
+            if let error = error {
+                self.errorMessage = "Failed to save recent message: \(error)"
+                return
+            }
+        }
+    }
 }

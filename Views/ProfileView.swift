@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     @EnvironmentObject var vm: AuthenticationViewModel
-    
+    @Environment(\.dismiss) var dismiss
     var body: some View {
         List {
             Section(header: Text("Profile image")) {
@@ -31,6 +31,7 @@ struct ProfileView: View {
             AccountInfoSection()
             Button {
                 vm.showSignOutAlert.toggle()
+                dismiss()
             } label: {
                 Text("Sign Out")
                     .font(.headline)

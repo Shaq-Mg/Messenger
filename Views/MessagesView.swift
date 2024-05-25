@@ -57,7 +57,7 @@ struct MessagesView: View {
                             .frame(width: 40, height: 40)
                         
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("Email")
+                            Text(vm.chatUser?.username ?? "")
                                 .font(.system(size: 18, weight: .semibold))
                             Text("Message")
                                 .font(.callout)

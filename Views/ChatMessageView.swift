@@ -30,7 +30,7 @@ struct ChatMessageView: View {
                             .id(vm.scrollToId)
                             .onReceive(vm.$messageCount) { _ in
                                 withAnimation(.easeOut(duration: 0.5)) {
-                                    ScrollViewProxy.scrollTo("Empty", anchor: .bottom)
+                                    ScrollViewProxy.scrollTo(vm.scrollToId, anchor: .bottom)
                                 }
                             }
                     }
