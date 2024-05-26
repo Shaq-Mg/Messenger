@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct SignUpView: View {
     @EnvironmentObject var viewModel: AuthenticationViewModel
@@ -15,6 +16,22 @@ struct SignUpView: View {
             ZStack {
                 Color.mint.ignoresSafeArea()
                 VStack(spacing: 20) {
+                    PhotosPicker(selection: $viewModel.selectedImage) {
+                        if let image = viewModel.image {
+                            Image(uiImage: image)
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .aspectRatio(contentMode: .fill)
+                                .clipShape(Circle())
+                                .shadow(radius: 4)
+                        } else {
+                            Image(systemName: "person.fill")
+                                .font(.system(size: 50))
+                                .foregroundStyle(.white)
+                                .padding()
+                                .overlay(Circle().stroke(lineWidth: 2).foregroundStyle(.white))
+                        }
+                    }
                     VStack(spacing: 8) {
                         
                         InputView(text: $viewModel.email, title: "Email", placeholder: "Test@hotmail.com")

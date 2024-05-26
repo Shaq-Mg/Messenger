@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 import Firebase
 import FirebaseFirestore
 import FirebaseAuth
@@ -18,6 +19,7 @@ final class AuthenticationViewModel: ObservableObject {
     @Published var showDeleteAccountAlert = false
     
     @Published var image: UIImage?
+    @Published var selectedImage: PhotosPickerItem?
     @Published var email = ""
     @Published var username = ""
     @Published var photoImageUrl = ""
@@ -42,7 +44,7 @@ final class AuthenticationViewModel: ObservableObject {
             print("Successfully created user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully created user: \(result?.user.uid ?? "")"
             //            self.persistImageToStorage()
-            self.createNewUser()
+            self.persistImageToStorage()
         }
     }
     
@@ -58,19 +60,19 @@ final class AuthenticationViewModel: ObservableObject {
         try await user.delete()
     }
     
-    private func createNewUser() {
-        guard let uid = manager.auth.currentUser?.uid else { return }
-        let userData = ["email": self.email, "username": self.username, "password": self.password, "uid": uid]
-        manager.firestore.collection("users")
-            .document(uid).setData(userData, merge: false) { error in
-                if let error = error {
-                    print(error)
-                    self.loginStatusMessage = "Failed to store user information to database: \(error)"
-                    return
-                }
-                print("Success")
-            }
-    }
+//    private func createNewUser() {
+//        guard let uid = manager.auth.currentUser?.uid else { return }
+//        let userData = ["email": self.email, "username": self.username, "password": self.password, "uid": uid]
+//        manager.firestore.collection("users")
+//            .document(uid).setData(userData, merge: false) { error in
+//                if let error = error {
+//                    print(error)
+//                    self.loginStatusMessage = "Failed to store user information to database: \(error)"
+//                    return
+//                }
+//                print("Success")
+//            }
+//    }
     
     private func persistImageToStorage() {
         guard let uid = manager.auth.currentUser?.uid else { return }

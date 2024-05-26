@@ -59,6 +59,6 @@ struct ChatMessageRow: View {
 
 struct ChatMessageRow_Previews: PreviewProvider {
     static var previews: some View {
-        ChatMessageRow(message: Message(fromId: "", toId: "", username: "Saka", email: "saka@gmail.com", text: "Good morning, world!", timestamp: Date()))
+        ChatMessageRow(message: Message(fromId: "", toId: "", username: "Saka", photoImageUrl: "", email: "saka@gmail.com", text: "Good morning, world!", timestamp: Date()))
     }
 }

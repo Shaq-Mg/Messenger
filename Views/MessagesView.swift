@@ -65,7 +65,7 @@ struct MessagesView: View {
                                 .multilineTextAlignment(.leading)
                         }
                         Spacer()
-                        Text("\(recentMessage.timestamp)")
+                        Text(recentMessage.timestamp.description)
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
