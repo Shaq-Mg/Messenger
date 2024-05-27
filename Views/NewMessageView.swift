@@ -14,7 +14,7 @@ struct NewMessageView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                VStack(spacing: 14) {
+                VStack(spacing: 16) {
                     ForEach(vm.users) { user in
                         HStack(spacing: 20) {
                             ProgressView()
@@ -23,13 +23,19 @@ struct NewMessageView: View {
                             } label: {
                                 VStack(alignment: .leading, spacing: 4) {
                                     Text(user.username)
+                                        .foregroundStyle(Color(.label))
                                         .font(.headline)
                                     Text(user.email)
-                                        .foregroundStyle(.secondary)
+                                        .font(.caption)
                                 }
                             }
                             Spacer()
+                            Image(systemName: "chevron.right")
+                                .font(.callout).bold()
+                                .foregroundStyle(.mint)
                         }
+                        .foregroundStyle(.secondary)
+                        Divider()
                     }
                 }
                 .padding(.horizontal)

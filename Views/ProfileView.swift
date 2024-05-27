@@ -23,7 +23,7 @@ struct ProfileView: View {
                                 .font(.system(size: 20))
                                 .foregroundStyle(.white)
                         )
-                    Text("email")
+                    Text("Saka7@gmail.com")
                         .font(.headline)
                 }
             }

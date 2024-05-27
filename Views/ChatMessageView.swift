@@ -43,11 +43,13 @@ struct ChatMessageView: View {
     
     private var titleRow: some View {
         HStack(spacing: 20) {
-            WebImage(url: URL(string: vm.chatUser?.photoImageUrl ?? ""))
+            Image("Profile1")
             .resizable()
             .aspectRatio(contentMode: .fill)
             .clipShape(Circle())
-            .frame(width: 5, height: 50)
+            .frame(width: 50, height: 50)
+            .overlay(Circle().stroke(lineWidth: 1))
+            .shadow(radius: 4)
             
             VStack(alignment: .leading, spacing: 6) {
                 Text(vm.chatUser?.username ?? "user")
