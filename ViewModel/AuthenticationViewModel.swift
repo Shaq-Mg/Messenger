@@ -18,6 +18,7 @@ final class AuthenticationViewModel: ObservableObject {
     @Published var showSignOutAlert = false
     @Published var showDeleteAccountAlert = false
     
+    @Published var data: Data?
     @Published var image: UIImage?
     @Published var selectedImage: PhotosPickerItem?
     @Published var email = ""
@@ -43,8 +44,7 @@ final class AuthenticationViewModel: ObservableObject {
             }
             print("Successfully created user: \(result?.user.uid ?? "")")
             self.loginStatusMessage = "Successfully created user: \(result?.user.uid ?? "")"
-            //            self.persistImageToStorage()
-            self.persistImageToStorage()
+            self.createNewUser()
         }
     }
     
@@ -60,24 +60,24 @@ final class AuthenticationViewModel: ObservableObject {
         try await user.delete()
     }
     
-//    private func createNewUser() {
-//        guard let uid = manager.auth.currentUser?.uid else { return }
-//        let userData = ["email": self.email, "username": self.username, "password": self.password, "uid": uid]
-//        manager.firestore.collection("users")
-//            .document(uid).setData(userData, merge: false) { error in
-//                if let error = error {
-//                    print(error)
-//                    self.loginStatusMessage = "Failed to store user information to database: \(error)"
-//                    return
-//                }
-//                print("Success")
-//            }
-//    }
+    private func createNewUser() {
+        guard let uid = manager.auth.currentUser?.uid else { return }
+        let userData: [String: Any] = ["email": self.email, "profileImageUrl": self.data ?? "", "username": self.username, "password": self.password, "uid": uid]
+        manager.firestore.collection("users")
+            .document(uid).setData(userData, merge: false) { error in
+                if let error = error {
+                    print(error)
+                    self.loginStatusMessage = "Failed to store user information to database: \(error)"
+                    return
+                }
+                print("Success")
+            }
+    }
     
     private func persistImageToStorage() {
         guard let uid = manager.auth.currentUser?.uid else { return }
         let ref = manager.storage.reference(withPath: uid)
-        guard let imageData = self.image?.jpegData(compressionQuality: 0.5) else { return }
+        guard let imageData = self.data else { return }
         ref.putData(imageData, metadata: nil) { metadata, error in
             if let error = error {
                 self.loginStatusMessage = "Failed to push image to storage: \(error)"
@@ -90,7 +90,6 @@ final class AuthenticationViewModel: ObservableObject {
                 }
                 self.loginStatusMessage = "Successfully stored image with url: \(url?.absoluteString ?? "")"
                 print(url?.absoluteString ?? "")
-                
                 guard let url = url else { return }
                 self.storeUserInformation(profileImageUrl: url)
             }
@@ -99,7 +98,7 @@ final class AuthenticationViewModel: ObservableObject {
     
     private func storeUserInformation(profileImageUrl: URL) {
         guard let uid = manager.auth.currentUser?.uid else { return }
-        let userData = ["email": self.email, "username": self.username, "password": self.password, "uid": uid]
+        let userData: [String: Any] = ["email": self.email, "photoImageUrl": self.data ?? "", "username": self.username, "password": self.password, "uid": uid]
         Firestore.firestore().collection("users")
             .document(uid).setData(userData) {  error in
                 if let error = error {

@@ -6,9 +6,10 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
-struct MessagesView: View {
-    @ObservedObject var vm = MessagesViewModel()
+struct MainMessagesView: View {
+    @ObservedObject var vm = MainMessagesViewModel()
     @State private var showNewMessageScreen = false
     var body: some View {
         NavigationStack {
@@ -78,20 +79,25 @@ struct MessagesView: View {
     }
 }
 
-struct MessagesView_Previews: PreviewProvider {
+struct MainMessagesView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationStack {
-            MessagesView()
+            MainMessagesView()
         }
     }
 }
 
 struct MessagesDisplayBar: View {
-    @ObservedObject var vm: MessagesViewModel
+    @ObservedObject var vm: MainMessagesViewModel
     var body: some View {
         HStack {
-            Circle()
-                .frame(width: 50, height: 50)
+            WebImage(url: URL(string: vm.chatUser?.photoImageUrl ?? ""))
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .clipShape(Circle())
+            .frame(width: 5, height: 50)
+            .shadow(radius: 5)
+            
             Text(vm.chatUser?.username ?? "user")
                 .font(.system(size: 24, weight: .bold))
             Spacer()

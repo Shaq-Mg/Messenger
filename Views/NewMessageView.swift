@@ -14,20 +14,25 @@ struct NewMessageView: View {
     var body: some View {
         NavigationStack {
             ScrollView {
-                ForEach(vm.users) { user in
-                    Button {
-                        dismiss()
-                        didSelectNewUser(user)
-                    } label: {
-                        VStack(alignment: .leading) {
-                            Text(user.username)
-                                .font(.headline)
-                            Text(user.email)
-                                .foregroundStyle(.secondary)
+                VStack(spacing: 14) {
+                    ForEach(vm.users) { user in
+                        HStack(spacing: 20) {
+                            ProgressView()
+                            NavigationLink {
+                                ChatMessageView(chatUser: user)
+                            } label: {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(user.username)
+                                        .font(.headline)
+                                    Text(user.email)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                            Spacer()
                         }
                     }
-
                 }
+                .padding(.horizontal)
             }.navigationTitle("New Message")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarLeading) {
@@ -37,7 +42,7 @@ struct NewMessageView: View {
                             Text("Cancel")
                                 .font(.headline)
                         }
-
+                        
                     }
                 }
         }

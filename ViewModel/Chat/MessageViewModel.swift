@@ -10,7 +10,7 @@ import Firebase
 import FirebaseFirestore
 import FirebaseAuth
 
-class MessagesViewModel: ObservableObject {
+class MainMessagesViewModel: ObservableObject {
     @Published var recentMessages: [Message] = []
     @Published var chatUser: ChatUser?
     @Published var errorMessage = ""

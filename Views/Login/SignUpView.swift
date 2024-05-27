@@ -11,27 +11,28 @@ import PhotosUI
 struct SignUpView: View {
     @EnvironmentObject var viewModel: AuthenticationViewModel
     @Environment(\.dismiss) var dismiss
+    
     var body: some View {
         NavigationStack {
             ZStack {
                 Color.mint.ignoresSafeArea()
                 VStack(spacing: 20) {
                     PhotosPicker(selection: $viewModel.selectedImage) {
-                        if let image = viewModel.image {
+                        if let data = viewModel.data, let image = UIImage(data: data) {
                             Image(uiImage: image)
                                 .resizable()
-                                .frame(width: 50, height: 50)
                                 .aspectRatio(contentMode: .fill)
                                 .clipShape(Circle())
                                 .shadow(radius: 4)
                         } else {
                             Image(systemName: "person.fill")
-                                .font(.system(size: 50))
+                                .font(.system(size: 40))
                                 .foregroundStyle(.white)
                                 .padding()
                                 .overlay(Circle().stroke(lineWidth: 2).foregroundStyle(.white))
                         }
                     }
+                    .frame(width: 80, height: 80)
                     VStack(spacing: 8) {
                         
                         InputView(text: $viewModel.email, title: "Email", placeholder: "Test@hotmail.com")
@@ -69,6 +70,19 @@ struct SignUpView: View {
                     Text(viewModel.loginStatusMessage)
                         .foregroundStyle(.secondary)
                 }
+                .onChange(of: viewModel.selectedImage, perform: { newValue in
+                    guard let item = viewModel.selectedImage else { return }
+                    item.loadTransferable(type: Data.self) { result in
+                        switch result {
+                        case .success(let data):
+                            if let data = data {
+                                viewModel.data = data
+                            }
+                        case .failure(_):
+                            print("Failed to convert data into image")
+                        }
+                    }
+                })
                 .padding(.horizontal)
             }
         }

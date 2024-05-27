@@ -13,7 +13,7 @@ struct MessengerApp: App {
     @StateObject private var vm = AuthenticationViewModel()
     var body: some Scene {
         WindowGroup {
-            MessagesView()
+            MainMessagesView()
                 .environmentObject(vm)
         }
     }

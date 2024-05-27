@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ChatMessageView: View {
     @ObservedObject var vm: ChatMessageViewModel
@@ -42,8 +43,12 @@ struct ChatMessageView: View {
     
     private var titleRow: some View {
         HStack(spacing: 20) {
-            Circle()
-                .frame(width: 50, height: 50)
+            WebImage(url: URL(string: vm.chatUser?.photoImageUrl ?? ""))
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .clipShape(Circle())
+            .frame(width: 5, height: 50)
+            
             VStack(alignment: .leading, spacing: 6) {
                 Text(vm.chatUser?.username ?? "user")
                     .font(.system(size: 20, weight: .semibold))
