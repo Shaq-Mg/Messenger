@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4639B6AA2C04AA830098C04F /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 4639B6A92C04AA830098C04F /* SDWebImageSwiftUI */; };
+		463CA5FE2C07574500B21980 /* RecentMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463CA5FD2C07574500B21980 /* RecentMessage.swift */; };
 		465B76682C01E9F800D410DF /* FirebaseConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 465B76672C01E9F800D410DF /* FirebaseConstants.swift */; };
 		46695E512BFF6B7100E7D59D /* NewMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46695E502BFF6B7100E7D59D /* NewMessageView.swift */; };
 		46695E532BFF6F7300E7D59D /* NewMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46695E522BFF6F7300E7D59D /* NewMessageViewModel.swift */; };
@@ -57,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		463CA5FD2C07574500B21980 /* RecentMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentMessage.swift; sourceTree = "<group>"; };
 		465B76672C01E9F800D410DF /* FirebaseConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseConstants.swift; sourceTree = "<group>"; };
 		46695E502BFF6B7100E7D59D /* NewMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageView.swift; sourceTree = "<group>"; };
 		46695E522BFF6F7300E7D59D /* NewMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageViewModel.swift; sourceTree = "<group>"; };
@@ -231,6 +233,7 @@
 			children = (
 				46EA83F52BF7E82F00BB2C1F /* ChatUser.swift */,
 				46791CDA2C00CFBA00D5512A /* Message.swift */,
+				463CA5FD2C07574500B21980 /* RecentMessage.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				46695E532BFF6F7300E7D59D /* NewMessageViewModel.swift in Sources */,
 				4685F67E2BFA6D91000554D8 /* ProfileView.swift in Sources */,
 				46695E512BFF6B7100E7D59D /* NewMessageView.swift in Sources */,
+				463CA5FE2C07574500B21980 /* RecentMessage.swift in Sources */,
 				46EA83F62BF7E82F00BB2C1F /* ChatUser.swift in Sources */,
 				46EA840E2BF7F05500BB2C1F /* SignUpView.swift in Sources */,
 				46EA84092BF7ECA600BB2C1F /* InputView.swift in Sources */,

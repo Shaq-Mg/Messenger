@@ -11,7 +11,7 @@ import FirebaseFirestore
 import FirebaseAuth
 
 class MainMessagesViewModel: ObservableObject {
-    @Published var recentMessages: [Message] = []
+    @Published var recentMessages: [RecentMessage] = []
     @Published var chatUser: ChatUser?
     @Published var errorMessage = ""
     @Published var isLoggedOut = true
@@ -47,7 +47,7 @@ class MainMessagesViewModel: ObservableObject {
                         self.recentMessages.remove(at: index)
                     }
                     do {
-                        if let rm = try? change.document.data(as: Message.self) {
+                        if let rm = try? change.document.data(as: RecentMessage.self) {
                             self.recentMessages.insert(rm, at: 0)
                         }
                     } catch {
