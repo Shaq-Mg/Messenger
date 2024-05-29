@@ -9,51 +9,54 @@ import SwiftUI
 
 struct ChatMessageRow: View {
     @State private var showTime = false
+    let manager = FirebaseManger.shared
     let message: Message
     var body: some View {
-        if message.fromId == FirebaseManger.shared.auth.currentUser?.uid {
-            VStack(alignment: .leading) {
+        VStack {
+            if message.fromId == manager.auth.currentUser?.uid {
                 HStack {
-                    Text(message.text)
-                        .padding()
-                        .background(.gray.opacity(0.2))
-                        .cornerRadius(20)
+                    Spacer()
+                    HStack {
+                        Text(message.text)
+                            .foregroundStyle(.black)
+                    }
+                    .onTapGesture {
+                        showTime.toggle()
+                    }
+                    .padding()
+                    .background(.mint.opacity(0.4))
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    if showTime {
+                        Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .padding(.leading)
+                    }
                 }
-                .frame(maxWidth: 300, alignment: .leading)
-                .onTapGesture {
-                    showTime.toggle()
-                }
-                if showTime {
-                    Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                        .padding(.leading)
+            } else {
+                HStack {
+                    HStack {
+                        Text(message.text)
+                            .foregroundStyle(.black)
+                    }
+                    .onTapGesture {
+                        showTime.toggle()
+                    }
+                    .padding()
+                    .background(.secondary.opacity(0.1))
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    if showTime {
+                        Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
+                            .font(.caption2)
+                            .foregroundColor(.secondary)
+                            .padding(.leading)
+                    }
+                    Spacer()
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.leading)
-        } else {
-            VStack(alignment: .trailing) {
-                HStack {
-                    Text(message.text)
-                        .padding()
-                        .background(.mint.opacity(0.2))
-                        .cornerRadius(20)
-                }
-                .frame(maxWidth: 300, alignment: .trailing)
-                .onTapGesture {
-                    showTime.toggle()
-                }
-                if showTime {
-                    Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
-                        .font(.caption2)
-                        .foregroundColor(.secondary)
-                        .padding(.trailing)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .trailing)
-            .padding(.trailing)
         }
+        .padding(.horizontal)
+        .padding(.top, 8)
     }
 }
 
