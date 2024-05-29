@@ -62,6 +62,7 @@ struct ChatMessageRow: View {
 
 struct ChatMessageRow_Previews: PreviewProvider {
     static var previews: some View {
-        ChatMessageRow(message: Message(fromId: "", toId: "", username: "Saka", photoImageUrl: "", email: "saka@gmail.com", text: "Good morning, world!", timestamp: Date()))
+        var data = [FirebaseConstants.fromId: "fromId", FirebaseConstants.toId: "toId", FirebaseConstants.text: "Good morning, world!", FirebaseConstants.timestamp: Date()] as [String : Any]
+        ChatMessageRow(message: Message(data: data))
     }
 }

@@ -28,8 +28,7 @@ class ChatMessageViewModel: ObservableObject {
     private func fetchMessages() {
         guard let fromId = manager.auth.currentUser?.uid else { return }
         guard let toId = chatUser?.uid else { return }
-        manager.firestore
-            .collection("messages")
+        manager.firestore.collection("messages")
             .document(fromId)
             .collection(toId)
             .order(by: "timestamp")
@@ -42,7 +41,7 @@ class ChatMessageViewModel: ObservableObject {
                 querySnapshot?.documentChanges.forEach({ change in
                     if change.type == .added {
                         let data = change.document.data()
-//                        self.messages.append(.init(documentId: change.document.documentID, data: data))
+                        self.messages.append(.init(data: data))
                     }
                 })
                 
@@ -71,7 +70,6 @@ class ChatMessageViewModel: ObservableObject {
             print("Successfully saved current user sending message")
             
             self.persistRecentMessage()
-            
             self.chatText = ""
             self.messageCount += 1
         }
