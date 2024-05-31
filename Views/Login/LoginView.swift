@@ -32,14 +32,19 @@ struct LoginView: View {
                         }
                     } label: {
                         Text("Sign In")
-                            .font(.headline)
+                            .font(.system(size: 20).bold())
+                            .foregroundStyle(.white)
                     }
-                    .buttonStyle(.bordered)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
                     
                     NavigationLink("Dont have a account? Sign up") {
                         SignUpView()
                     }
                     .font(.callout)
+                    .foregroundStyle(.black)
                     Text(viewModel.loginStatusMessage)
                         .foregroundStyle(.white)
                 }

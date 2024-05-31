@@ -58,13 +58,18 @@ struct SignUpView: View {
                         }
                     } label: {
                         Text("Sign Up")
-                            .font(.headline)
+                            .font(.system(size: 20).bold())
+                            .foregroundStyle(.white)
                     }
-                    .buttonStyle(.bordered)
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(.black)
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
                     
                     Button("Already have a existing account? Sign In") {
                         dismiss()
                     }
+                    .foregroundStyle(.black)
                     .font(.callout)
                     
                     Text(viewModel.loginStatusMessage)
