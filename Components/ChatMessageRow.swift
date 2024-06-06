@@ -17,39 +17,41 @@ struct ChatMessageRow: View {
                 HStack {
                     Spacer()
                     HStack {
-                        Text(message.text)
-                            .foregroundStyle(.black)
+                        VStack(alignment: .trailing) {
+                            Text(message.text)
+                                .foregroundStyle(.black)
+                                .padding()
+                                .background(.mint.opacity(0.4))
+                                .clipShape(RoundedRectangle(cornerRadius: 20))
+                            if showTime {
+                                Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
+                                    .font(.caption2)
+                                    .foregroundColor(.secondary)
+                                    .padding(.leading)
+                            }
+                        }
                     }
                     .onTapGesture {
                         showTime.toggle()
-                    }
-                    .padding()
-                    .background(.mint.opacity(0.4))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    if showTime {
-                        Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                            .padding(.leading)
                     }
                 }
             } else {
                 HStack {
-                    HStack {
+                    VStack(alignment: .leading) {
                         Text(message.text)
                             .foregroundStyle(.black)
+                            .padding()
+                            .background(.secondary.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerRadius: 20))
+                        if showTime {
+                            Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                                .padding(.leading)
+                        }
                     }
                     .onTapGesture {
                         showTime.toggle()
-                    }
-                    .padding()
-                    .background(.secondary.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
-                    if showTime {
-                        Text("\(message.timestamp.formatted(.dateTime.hour().minute()))")
-                            .font(.caption2)
-                            .foregroundColor(.secondary)
-                            .padding(.leading)
                     }
                     Spacer()
                 }
@@ -62,7 +64,7 @@ struct ChatMessageRow: View {
 
 struct ChatMessageRow_Previews: PreviewProvider {
     static var previews: some View {
-        var data = [FirebaseConstants.fromId: "fromId", FirebaseConstants.toId: "toId", FirebaseConstants.text: "Good morning, world!", FirebaseConstants.timestamp: Date()] as [String : Any]
-        ChatMessageRow(message: Message(data: data))
+        let data = [FirebaseConstants.fromId: "fromId", FirebaseConstants.toId: "toId", FirebaseConstants.text: "Good morning, world!", FirebaseConstants.timestamp: Date()] as [String : Any]
+        ChatMessageRow(message: Message(documentId: "1234", data: data))
     }
 }

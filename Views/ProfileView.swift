@@ -24,6 +24,7 @@ struct ProfileView: View {
                                 .foregroundStyle(.white)
                         )
                     Text("Saka7@gmail.com")
+                        .foregroundStyle(.black)
                         .font(.headline)
                 }
             }
@@ -81,7 +82,7 @@ struct AccountInfoSection: View {
             LabeledContent {
                 Text(vm.username)
             } label: {
-                Text("Usernane")
+                Text("Username")
             }
             LabeledContent {
                 Text(vm.email)

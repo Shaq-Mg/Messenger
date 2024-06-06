@@ -41,7 +41,7 @@ class ChatMessageViewModel: ObservableObject {
                 querySnapshot?.documentChanges.forEach({ change in
                     if change.type == .added {
                         let data = change.document.data()
-                        self.messages.append(.init(data: data))
+                        self.messages.append(.init(documentId: change.document.documentID, data: data))
                     }
                 })
                 

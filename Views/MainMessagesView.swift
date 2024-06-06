@@ -45,7 +45,7 @@ struct MainMessagesView: View {
                         .foregroundStyle(.mint)
                 }),
                 alignment: .bottom)
-        }
+        }.tint(.secondary)
     }
     private var messageListView: some View {
         ScrollView {
