@@ -8,11 +8,20 @@
 import SwiftUI
 
 struct RootView: View {
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if authViewModel.isUserCurrrentlyLoggedOut {
+            LoginView()
+        } else {
+            HomeView()
+        }
     }
 }
 
 #Preview {
-    RootView()
+    NavigationStack {
+        RootView()
+            .environmentObject(AuthenticationViewModel())
+    }
 }

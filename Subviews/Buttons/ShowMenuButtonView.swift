@@ -8,11 +8,25 @@
 import SwiftUI
 
 struct ShowMenuButtonView: View {
+    @Binding var isMenuShowing: Bool
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            Button {
+                isMenuShowing.toggle()
+            } label: {
+                Image(systemName: "line.3.horizontal")
+                    .imageScale(.small)
+                    .foregroundStyle(.black)
+                    .font(.system(size: 22))
+                    .padding(10)
+                    .background(Circle().foregroundStyle(.white))
+                    .shadow(radius: 10)
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .trailing)
     }
 }
 
 #Preview {
-    ShowMenuButtonView()
+    ShowMenuButtonView(isMenuShowing: .constant(false))
 }

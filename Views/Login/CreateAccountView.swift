@@ -1,8 +1,16 @@
+//
+//  CreateAccountView.swift
+//  Messenger
+//
+//  Created by Shaquille McGregor on 07/12/2024.
+//
+
+
 import SwiftUI
 import PhotosUI
 
 struct CreateAccountView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthenticationViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -28,8 +36,11 @@ struct CreateAccountView: View {
             .cornerRadius(8)
             .padding(.vertical)
             
-            Button("Already have a existing account? login") {
+            Button {
                 dismiss()
+            } label: {
+                Text("Already have an existing accont?")
+                Text("Sign in").bold()
             }
             .foregroundStyle(.black)
             
@@ -42,10 +53,10 @@ struct CreateAccountView: View {
         .onAppear { authViewModel.clearLoginInformation() }
         .onChange(of: authViewModel.selectedItem) { _, newItem in
             Task {
+                // Load image data
                 if let data = try? await newItem?.loadTransferable(type: Data.self) {
                     authViewModel.selectedImageData = data
-                    
-                    authViewModel.persistImageToStorage()
+                    authViewModel.saveImageToFileManager(data: data)
                 }
             }
         }
@@ -55,7 +66,7 @@ struct CreateAccountView: View {
 #Preview {
     NavigationStack {
         CreateAccountView()
-            .environmentObject(AuthViewModel())
+            .environmentObject(AuthenticationViewModel())
     }
 }
 
